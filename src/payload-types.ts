@@ -72,6 +72,13 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    'practice-areas': PracticeArea;
+    attorneys: Attorney;
+    'case-results': CaseResult;
+    testimonials: Testimonial;
+    insights: Insight;
+    awards: Award;
+    'consultation-requests': ConsultationRequest;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,6 +101,13 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'practice-areas': PracticeAreasSelect<false> | PracticeAreasSelect<true>;
+    attorneys: AttorneysSelect<false> | AttorneysSelect<true>;
+    'case-results': CaseResultsSelect<false> | CaseResultsSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    insights: InsightsSelect<false> | InsightsSelect<true>;
+    awards: AwardsSelect<false> | AwardsSelect<true>;
+    'consultation-requests': ConsultationRequestsSelect<false> | ConsultationRequestsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -106,16 +120,22 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
   globals: {
     header: Header;
     footer: Footer;
+    'site-settings': SiteSetting;
+    'process-steps': ProcessStep;
+    'why-choose-us': WhyChooseUs;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'process-steps': ProcessStepsSelect<false> | ProcessStepsSelect<true>;
+    'why-choose-us': WhyChooseUsSelect<false> | WhyChooseUsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -156,7 +176,7 @@ export interface UserAuthOperations {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
+  id: number;
   title: string;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
@@ -183,11 +203,11 @@ export interface Page {
             reference?:
               | ({
                   relationTo: 'pages';
-                  value: string | Page;
+                  value: number | Page;
                 } | null)
               | ({
                   relationTo: 'posts';
-                  value: string | Post;
+                  value: number | Post;
                 } | null);
             url?: string | null;
             label: string;
@@ -199,7 +219,7 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    media?: (number | null) | Media;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
@@ -207,7 +227,7 @@ export interface Page {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
   publishedAt?: string | null;
@@ -225,9 +245,9 @@ export interface Page {
  * via the `definition` "posts".
  */
 export interface Post {
-  id: string;
+  id: number;
   title: string;
-  heroImage?: (string | null) | Media;
+  heroImage?: (number | null) | Media;
   content: {
     root: {
       type: string;
@@ -243,18 +263,18 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  relatedPosts?: (string | Post)[] | null;
-  categories?: (string | Category)[] | null;
+  relatedPosts?: (number | Post)[] | null;
+  categories?: (number | Category)[] | null;
   meta?: {
     title?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
+  authors?: (number | User)[] | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -275,7 +295,7 @@ export interface Post {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt?: string | null;
   caption?: {
     root: {
@@ -292,7 +312,7 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
-  folder?: (string | null) | FolderInterface;
+  folder?: (number | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -368,18 +388,18 @@ export interface Media {
  * via the `definition` "payload-folders".
  */
 export interface FolderInterface {
-  id: string;
+  id: number;
   name: string;
-  folder?: (string | null) | FolderInterface;
+  folder?: (number | null) | FolderInterface;
   documentsAndFolders?: {
     docs?: (
       | {
           relationTo?: 'payload-folders';
-          value: string | FolderInterface;
+          value: number | FolderInterface;
         }
       | {
           relationTo?: 'media';
-          value: string | Media;
+          value: number | Media;
         }
     )[];
     hasNextPage?: boolean;
@@ -394,17 +414,17 @@ export interface FolderInterface {
  * via the `definition` "categories".
  */
 export interface Category {
-  id: string;
+  id: number;
   title: string;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
-  parent?: (string | null) | Category;
+  parent?: (number | null) | Category;
   breadcrumbs?:
     | {
-        doc?: (string | null) | Category;
+        doc?: (number | null) | Category;
         url?: string | null;
         label?: string | null;
         id?: string | null;
@@ -418,7 +438,7 @@ export interface Category {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   name?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -467,11 +487,11 @@ export interface CallToActionBlock {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: string | Page;
+                value: number | Page;
               } | null)
             | ({
                 relationTo: 'posts';
-                value: string | Post;
+                value: number | Post;
               } | null);
           url?: string | null;
           label: string;
@@ -517,11 +537,11 @@ export interface ContentBlock {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: string | Page;
+                value: number | Page;
               } | null)
             | ({
                 relationTo: 'posts';
-                value: string | Post;
+                value: number | Post;
               } | null);
           url?: string | null;
           label: string;
@@ -542,7 +562,7 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: string | Media;
+  media: number | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -569,12 +589,12 @@ export interface ArchiveBlock {
   } | null;
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: 'posts' | null;
-  categories?: (string | Category)[] | null;
+  categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
     | {
         relationTo: 'posts';
-        value: string | Post;
+        value: number | Post;
       }[]
     | null;
   id?: string | null;
@@ -586,7 +606,7 @@ export interface ArchiveBlock {
  * via the `definition` "FormBlock".
  */
 export interface FormBlock {
-  form: string | Form;
+  form: number | Form;
   enableIntro?: boolean | null;
   introContent?: {
     root: {
@@ -612,7 +632,7 @@ export interface FormBlock {
  * via the `definition` "forms".
  */
 export interface Form {
-  id: string;
+  id: number;
   title: string;
   fields?:
     | (
@@ -783,10 +803,187 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "practice-areas".
+ */
+export interface PracticeArea {
+  id: number;
+  title: string;
+  shortDescription: string;
+  order: number;
+  slug: string;
+  icon?: (number | null) | Media;
+  fullDescription?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "attorneys".
+ */
+export interface Attorney {
+  id: number;
+  name: string;
+  slug: string;
+  role: string;
+  specialty: string;
+  yearsExperience: number;
+  photo: number | Media;
+  practiceAreas?: (number | PracticeArea)[] | null;
+  bio?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  email?: string | null;
+  order?: number | null;
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-results".
+ */
+export interface CaseResult {
+  id: number;
+  headline: string;
+  category: string;
+  description: string;
+  meta: string;
+  order?: number | null;
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  quote: string;
+  clientName: string;
+  clientTitle: string;
+  /**
+   * Single letter fallback. Auto-derived from clientName if blank.
+   */
+  avatarInitial?: string | null;
+  photo?: (number | null) | Media;
+  order?: number | null;
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "insights".
+ */
+export interface Insight {
+  id: number;
+  title: string;
+  slug: string;
+  publishedDate: string;
+  /**
+   * Estimated minutes to read
+   */
+  readTime?: number | null;
+  excerpt: string;
+  coverImage?: (number | null) | Media;
+  category: number | Category;
+  author?: (number | null) | Attorney;
+  /**
+   * Renders as the large featured article card
+   */
+  featured?: boolean | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "awards".
+ */
+export interface Award {
+  id: number;
+  organization: string;
+  distinction: string;
+  icon?: ('award' | 'medal' | 'trophy' | 'star' | 'shield-check') | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "consultation-requests".
+ */
+export interface ConsultationRequest {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+  practiceArea?:
+    | (
+        | 'corporate-ma'
+        | 'litigation-disputes'
+        | 'real-estate'
+        | 'employment-labour'
+        | 'private-client-family'
+        | 'intellectual-property'
+        | 'immigration'
+        | 'white-collar-defense'
+        | 'other'
+      )
+    | null;
+  message: string;
+  status?: ('new' | 'contacted' | 'engaged' | 'closed') | null;
+  submittedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
-  id: string;
+  id: number;
   /**
    * You will need to rebuild the website when changing this field.
    */
@@ -796,11 +993,11 @@ export interface Redirect {
     reference?:
       | ({
           relationTo: 'pages';
-          value: string | Page;
+          value: number | Page;
         } | null)
       | ({
           relationTo: 'posts';
-          value: string | Post;
+          value: number | Post;
         } | null);
     url?: string | null;
   };
@@ -812,8 +1009,8 @@ export interface Redirect {
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
-  id: string;
-  form: string | Form;
+  id: number;
+  form: number | Form;
   submissionData?:
     | {
         field: string;
@@ -831,18 +1028,18 @@ export interface FormSubmission {
  * via the `definition` "search".
  */
 export interface Search {
-  id: string;
+  id: number;
   title?: string | null;
   priority?: number | null;
   doc: {
     relationTo: 'posts';
-    value: string | Post;
+    value: number | Post;
   };
   slug?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
   };
   categories?:
     | {
@@ -860,7 +1057,7 @@ export interface Search {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -877,7 +1074,7 @@ export interface PayloadKv {
  * via the `definition` "payload-jobs".
  */
 export interface PayloadJob {
-  id: string;
+  id: number;
   /**
    * Input data provided to the job
    */
@@ -969,52 +1166,80 @@ export interface PayloadJob {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'pages';
-        value: string | Page;
+        value: number | Page;
       } | null)
     | ({
         relationTo: 'posts';
-        value: string | Post;
+        value: number | Post;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'categories';
-        value: string | Category;
+        value: number | Category;
       } | null)
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'practice-areas';
+        value: number | PracticeArea;
+      } | null)
+    | ({
+        relationTo: 'attorneys';
+        value: number | Attorney;
+      } | null)
+    | ({
+        relationTo: 'case-results';
+        value: number | CaseResult;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'insights';
+        value: number | Insight;
+      } | null)
+    | ({
+        relationTo: 'awards';
+        value: number | Award;
+      } | null)
+    | ({
+        relationTo: 'consultation-requests';
+        value: number | ConsultationRequest;
       } | null)
     | ({
         relationTo: 'redirects';
-        value: string | Redirect;
+        value: number | Redirect;
       } | null)
     | ({
         relationTo: 'forms';
-        value: string | Form;
+        value: number | Form;
       } | null)
     | ({
         relationTo: 'form-submissions';
-        value: string | FormSubmission;
+        value: number | FormSubmission;
       } | null)
     | ({
         relationTo: 'search';
-        value: string | Search;
+        value: number | Search;
       } | null)
     | ({
         relationTo: 'payload-folders';
-        value: string | FolderInterface;
+        value: number | FolderInterface;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -1024,10 +1249,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -1047,7 +1272,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -1358,6 +1583,113 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "practice-areas_select".
+ */
+export interface PracticeAreasSelect<T extends boolean = true> {
+  title?: T;
+  shortDescription?: T;
+  order?: T;
+  slug?: T;
+  icon?: T;
+  fullDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "attorneys_select".
+ */
+export interface AttorneysSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  role?: T;
+  specialty?: T;
+  yearsExperience?: T;
+  photo?: T;
+  practiceAreas?: T;
+  bio?: T;
+  email?: T;
+  order?: T;
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-results_select".
+ */
+export interface CaseResultsSelect<T extends boolean = true> {
+  headline?: T;
+  category?: T;
+  description?: T;
+  meta?: T;
+  order?: T;
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  quote?: T;
+  clientName?: T;
+  clientTitle?: T;
+  avatarInitial?: T;
+  photo?: T;
+  order?: T;
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "insights_select".
+ */
+export interface InsightsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  publishedDate?: T;
+  readTime?: T;
+  excerpt?: T;
+  coverImage?: T;
+  category?: T;
+  author?: T;
+  featured?: T;
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "awards_select".
+ */
+export interface AwardsSelect<T extends boolean = true> {
+  organization?: T;
+  distinction?: T;
+  icon?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "consultation-requests_select".
+ */
+export interface ConsultationRequestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  practiceArea?: T;
+  message?: T;
+  status?: T;
+  submittedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
@@ -1636,7 +1968,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "header".
  */
 export interface Header {
-  id: string;
+  id: number;
   navItems?:
     | {
         link: {
@@ -1645,11 +1977,11 @@ export interface Header {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: string | Page;
+                value: number | Page;
               } | null)
             | ({
                 relationTo: 'posts';
-                value: string | Post;
+                value: number | Post;
               } | null);
           url?: string | null;
           label: string;
@@ -1665,24 +1997,98 @@ export interface Header {
  * via the `definition` "footer".
  */
 export interface Footer {
-  id: string;
-  navItems?:
+  id: number;
+  columns?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        title: string;
+        links?:
+          | {
+              label: string;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  legalLine?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  heroEyebrow?: string | null;
+  heroHeadline?: string | null;
+  heroLead?: string | null;
+  heroCtaPrimary?: string | null;
+  heroCtaSecondary?: string | null;
+  heroBgImage?: (number | null) | Media;
+  heroPortraitImage?: (number | null) | Media;
+  heroStatSatisfaction?: string | null;
+  statYears?: string | null;
+  statYearsLabel?: string | null;
+  statCases?: string | null;
+  statCasesLabel?: string | null;
+  statAttorneys?: string | null;
+  statAttorneysLabel?: string | null;
+  statSatisfaction?: string | null;
+  statSatisfactionLabel?: string | null;
+  statRecovered?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  addressLine1?: string | null;
+  addressLine2?: string | null;
+  officeHours?: string | null;
+  officeHoursNote?: string | null;
+  officeMapImage?: (number | null) | Media;
+  ctaHeadline?: string | null;
+  ctaBody?: string | null;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "process-steps".
+ */
+export interface ProcessStep {
+  id: number;
+  sectionHeadline?: string | null;
+  steps?:
+    | {
+        number: number;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-choose-us".
+ */
+export interface WhyChooseUs {
+  id: number;
+  sectionEyebrow?: string | null;
+  sectionHeadline?: string | null;
+  partnerQuote?: string | null;
+  partnerQuoteCite?: string | null;
+  partnerQuoteImage?: (number | null) | Media;
+  items?:
+    | {
+        /**
+         * Lucide icon name — e.g. scale, target, lock
+         */
+        icon?: string | null;
+        title: string;
+        description: string;
         id?: string | null;
       }[]
     | null;
@@ -1717,18 +2123,95 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
+  columns?:
     | T
     | {
-        link?:
+        title?: T;
+        links?:
           | T
           | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
               label?: T;
+              url?: T;
+              id?: T;
             };
+        id?: T;
+      };
+  legalLine?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  heroEyebrow?: T;
+  heroHeadline?: T;
+  heroLead?: T;
+  heroCtaPrimary?: T;
+  heroCtaSecondary?: T;
+  heroBgImage?: T;
+  heroPortraitImage?: T;
+  heroStatSatisfaction?: T;
+  statYears?: T;
+  statYearsLabel?: T;
+  statCases?: T;
+  statCasesLabel?: T;
+  statAttorneys?: T;
+  statAttorneysLabel?: T;
+  statSatisfaction?: T;
+  statSatisfactionLabel?: T;
+  statRecovered?: T;
+  phone?: T;
+  email?: T;
+  addressLine1?: T;
+  addressLine2?: T;
+  officeHours?: T;
+  officeHoursNote?: T;
+  officeMapImage?: T;
+  ctaHeadline?: T;
+  ctaBody?: T;
+  metaTitle?: T;
+  metaDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "process-steps_select".
+ */
+export interface ProcessStepsSelect<T extends boolean = true> {
+  sectionHeadline?: T;
+  steps?:
+    | T
+    | {
+        number?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-choose-us_select".
+ */
+export interface WhyChooseUsSelect<T extends boolean = true> {
+  sectionEyebrow?: T;
+  sectionHeadline?: T;
+  partnerQuote?: T;
+  partnerQuoteCite?: T;
+  partnerQuoteImage?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -1756,14 +2239,14 @@ export interface TaskSchedulePublish {
     doc?:
       | ({
           relationTo: 'pages';
-          value: string | Page;
+          value: number | Page;
         } | null)
       | ({
           relationTo: 'posts';
-          value: string | Post;
+          value: number | Post;
         } | null);
     global?: string | null;
-    user?: (string | null) | User;
+    user?: (number | null) | User;
   };
   output?: unknown;
 }

@@ -1,9 +1,35 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
+import type { PayloadAttorney } from '../types/payload'
 import { ATTORNEYS } from '../constants/content'
 import { ImageSlot } from './ImageSlot'
 
-export function Attorneys() {
+interface AttorneysProps {
+  attorneys?: PayloadAttorney[] | null
+}
+
+export function Attorneys({ attorneys }: AttorneysProps) {
+  const items =
+    attorneys && attorneys.length > 0
+      ? attorneys.map((a) => ({
+          id: String(a.id),
+          name: a.name,
+          role: a.role,
+          spec: a.specialty,
+          years: String(a.yearsExperience),
+          photoUrl: a.photo?.url || null,
+          photoAlt: a.photo?.alt || a.name,
+        }))
+      : ATTORNEYS.map((a) => ({
+          id: a.id,
+          name: a.name,
+          role: a.role,
+          spec: a.spec,
+          years: a.years,
+          photoUrl: null,
+          photoAlt: a.name,
+        }))
+
   return (
     <section className="la-section" id="attorneys" data-screen-label="Attorneys">
       <div className="la-container">
@@ -19,10 +45,14 @@ export function Attorneys() {
         </div>
 
         <div className="attorneys-grid">
-          {ATTORNEYS.map(({ id, name, role, spec, years }, i) => (
+          {items.map(({ id, name, role, spec, years, photoUrl, photoAlt }, i) => (
             <article key={id} className={`attorney reveal${i > 0 ? ` d${i}` : ''}`}>
               <div className="photo">
-                <ImageSlot placeholder="Portrait" />
+                {photoUrl ? (
+                  <img src={photoUrl} alt={photoAlt} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  <ImageSlot placeholder="Portrait" />
+                )}
                 <span className="badge">{years} yrs experience</span>
               </div>
               <div className="info">

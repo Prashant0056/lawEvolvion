@@ -1,8 +1,23 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
+import type { PayloadPracticeArea } from '../types/payload'
 import { PRACTICE_AREAS } from '../constants/content'
 
-export function PracticeAreas() {
+interface PracticeAreasProps {
+  practiceAreas?: PayloadPracticeArea[] | null
+}
+
+export function PracticeAreas({ practiceAreas }: PracticeAreasProps) {
+  const items =
+    practiceAreas && practiceAreas.length > 0
+      ? practiceAreas.map((pa, i) => ({
+          idx: String(pa.order ?? i + 1).padStart(2, '0'),
+          title: pa.title,
+          desc: pa.shortDescription,
+          key: String(pa.id),
+        }))
+      : PRACTICE_AREAS.map((pa) => ({ idx: pa.idx, title: pa.title, desc: pa.desc, key: pa.idx }))
+
   return (
     <section className="la-section" id="practice" data-screen-label="Practice Areas">
       <div className="la-container">
@@ -21,8 +36,8 @@ export function PracticeAreas() {
           </div>
 
           <div className="practice-list reveal d1">
-            {PRACTICE_AREAS.map(({ idx, title, desc }) => (
-              <a key={idx} className="parea" href="#contact">
+            {items.map(({ idx, title, desc, key }) => (
+              <a key={key} className="parea" href="#contact">
                 <span className="idx">{idx}</span>
                 <span>
                   <span className="pa-title">{title}</span>

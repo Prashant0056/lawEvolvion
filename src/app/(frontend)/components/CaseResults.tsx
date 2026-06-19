@@ -1,6 +1,28 @@
+import type { PayloadCaseResult } from '../types/payload'
 import { CASE_RESULTS } from '../constants/content'
 
-export function CaseResults() {
+interface CaseResultsProps {
+  caseResults?: PayloadCaseResult[] | null
+}
+
+export function CaseResults({ caseResults }: CaseResultsProps) {
+  const items =
+    caseResults && caseResults.length > 0
+      ? caseResults.map((r) => ({
+          key: String(r.id),
+          cat: r.category,
+          amt: r.headline,
+          desc: r.description,
+          meta: r.meta,
+        }))
+      : CASE_RESULTS.map((r) => ({
+          key: r.cat,
+          cat: r.cat,
+          amt: r.amt,
+          desc: r.desc,
+          meta: r.meta,
+        }))
+
   return (
     <section className="la-section band" id="results" data-screen-label="Case Results">
       <div className="la-container">
@@ -18,8 +40,8 @@ export function CaseResults() {
         </div>
 
         <div className="cases-grid">
-          {CASE_RESULTS.map(({ cat, amt, desc, meta }, i) => (
-            <article key={cat} className={`case reveal${i > 0 ? ` d${i}` : ''}`}>
+          {items.map(({ key, cat, amt, desc, meta }, i) => (
+            <article key={key} className={`case reveal${i > 0 ? ` d${i}` : ''}`}>
               <span className="cat">{cat}</span>
               <div className="amt">{amt}</div>
               <p className="desc">{desc}</p>

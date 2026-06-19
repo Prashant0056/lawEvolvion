@@ -3,12 +3,34 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import type { PayloadTestimonial } from '../types/payload'
 import { TESTIMONIALS } from '../constants/content'
 
-export function Testimonials() {
+interface TestimonialsProps {
+  testimonials?: PayloadTestimonial[] | null
+}
+
+export function Testimonials({ testimonials }: TestimonialsProps) {
+  const items =
+    testimonials && testimonials.length > 0
+      ? testimonials.map((t) => ({
+          key: String(t.id),
+          quote: t.quote,
+          name: t.clientName,
+          role: t.clientTitle,
+          initial: t.avatarInitial || t.clientName.charAt(0),
+        }))
+      : TESTIMONIALS.map((t) => ({
+          key: t.name,
+          quote: t.quote,
+          name: t.name,
+          role: t.role,
+          initial: t.initial,
+        }))
+
   const [index, setIndex] = useState(0)
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const count = TESTIMONIALS.length
+  const count = items.length
 
   const go = useCallback((n: number) => setIndex((n + count) % count), [count])
 
@@ -39,8 +61,8 @@ export function Testimonials() {
                 style={{ transform: `translateX(${-index * 100}%)` }}
                 aria-live="polite"
               >
-                {TESTIMONIALS.map(({ quote, name, role, initial }, i) => (
-                  <div key={name} className="tslide" aria-hidden={i !== index}>
+                {items.map(({ key, quote, name, role, initial }, i) => (
+                  <div key={key} className="tslide" aria-hidden={i !== index}>
                     <p className="tquote">
                       <span className="mark">&ldquo;</span>
                       {quote}

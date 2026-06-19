@@ -1,6 +1,5 @@
 import type { GlobalConfig } from 'payload'
 
-import { link } from '@/fields/link'
 import { revalidateFooter } from './hooks/revalidateFooter'
 
 export const Footer: GlobalConfig = {
@@ -10,20 +9,38 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
-      name: 'navItems',
+      name: 'columns',
       type: 'array',
+      admin: { initCollapsed: true },
       fields: [
-        link({
-          appearances: false,
-        }),
-      ],
-      maxRows: 6,
-      admin: {
-        initCollapsed: true,
-        components: {
-          RowLabel: '@/Footer/RowLabel#RowLabel',
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
         },
-      },
+        {
+          name: 'links',
+          type: 'array',
+          fields: [
+            {
+              name: 'label',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'url',
+              type: 'text',
+              required: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'legalLine',
+      type: 'text',
+      defaultValue:
+        'Attorney Advertising · Prior results do not guarantee a similar outcome.',
     },
   ],
   hooks: {

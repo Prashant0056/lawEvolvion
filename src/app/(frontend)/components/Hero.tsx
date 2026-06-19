@@ -1,13 +1,16 @@
 import { ArrowRight } from 'lucide-react'
 
 import { FIRM_TAGLINE } from '../constants/content'
-import { ImageSlot } from './ImageSlot'
 
 export function Hero() {
   return (
     <section className="hero la-section" data-screen-label="Hero">
       <div className="hero-bg">
-        <ImageSlot placeholder="Drop a courtroom / office image" />
+        <img
+          src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?auto=format&fit=crop&w=1920&q=80"
+          alt="Law office interior"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
       </div>
       <div className="la-container">
         <div className="hero-grid">
@@ -38,7 +41,11 @@ export function Hero() {
           <div className="hero-media reveal d1" aria-hidden="true">
             <span className="frame" />
             <div className="hero-portrait">
-              <ImageSlot placeholder="Drop an attorney portrait" />
+              <img
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80"
+                alt="Senior Partner"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
             </div>
             <div className="hero-plate">
               <span className="big">98%</span>

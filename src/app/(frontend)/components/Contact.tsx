@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { FIRM_ADDRESS, FIRM_EMAIL, FIRM_HOURS, FIRM_PHONE } from '../constants/content'
-import { ImageSlot } from './ImageSlot'
 
 interface FormValues {
   name: string
@@ -88,7 +87,11 @@ export function Contact() {
           <aside className="contact-aside reveal d1">
             <div className="contact-card">
               <div className="contact-map">
-                <ImageSlot placeholder="Drop a map image" />
+                <img
+                  src="https://images.unsplash.com/photo-1546422401-cdfefd070342?auto=format&fit=crop&w=900&q=80"
+                  alt="400 Park Avenue, New York"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
               </div>
               <div className="contact-rows">
                 {[

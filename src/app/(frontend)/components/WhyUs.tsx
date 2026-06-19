@@ -1,7 +1,6 @@
 import { Award, Globe, Lock, MessagesSquare, Scale, Target } from 'lucide-react'
 
 import { WHY_US_ITEMS } from '../constants/content'
-import { ImageSlot } from './ImageSlot'
 
 const ICON_MAP = { Scale, Target, MessagesSquare, Award, Lock, Globe } as const
 type IconKey = keyof typeof ICON_MAP
@@ -13,7 +12,11 @@ export function WhyUs() {
         <div className="why-layout">
           <div className="why-media reveal">
             <div className="why-media-img">
-              <ImageSlot placeholder="Drop an office / team image" />
+              <img
+                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80"
+                alt="Law Associates team"
+                style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', display: 'block', borderRadius: 14 }}
+              />
             </div>
             <blockquote className="why-quote">
               <p>

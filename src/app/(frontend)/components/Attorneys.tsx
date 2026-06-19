@@ -1,7 +1,6 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
 import { ATTORNEYS } from '../constants/content'
-import { ImageSlot } from './ImageSlot'
 
 export function Attorneys() {
   return (
@@ -19,10 +18,10 @@ export function Attorneys() {
         </div>
 
         <div className="attorneys-grid">
-          {ATTORNEYS.map(({ id, name, role, spec, years }, i) => (
+          {ATTORNEYS.map(({ id, name, role, spec, years, img }, i) => (
             <article key={id} className={`attorney reveal${i > 0 ? ` d${i}` : ''}`}>
               <div className="photo">
-                <ImageSlot placeholder="Portrait" />
+                <img src={img} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 <span className="badge">{years} yrs experience</span>
               </div>
               <div className="info">

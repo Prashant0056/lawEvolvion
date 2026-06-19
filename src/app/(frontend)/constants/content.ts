@@ -28,9 +28,9 @@ export const WHY_US_ITEMS = [
 ] as const
 
 export const ATTORNEYS = [
-  { id: 'att-1', name: 'Eleanor Ashford-Vance', role: 'Managing Partner', spec: 'Corporate & Mergers · Governance', years: '24' },
-  { id: 'att-2', name: 'Marcus J. Holloway', role: 'Partner · Litigation', spec: 'Commercial & Civil Disputes', years: '19' },
-  { id: 'att-3', name: 'Priya Nair Castellanos', role: 'Partner · Private Client', spec: 'Estates, Family & Wealth', years: '17' },
+  { id: 'att-1', name: 'Eleanor Ashford-Vance', role: 'Managing Partner', spec: 'Corporate & Mergers · Governance', years: '24', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80' },
+  { id: 'att-2', name: 'Marcus J. Holloway', role: 'Partner · Litigation', spec: 'Commercial & Civil Disputes', years: '19', img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80' },
+  { id: 'att-3', name: 'Priya Nair Castellanos', role: 'Partner · Private Client', spec: 'Estates, Family & Wealth', years: '17', img: 'https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&fit=crop&w=600&q=80' },
 ] as const
 
 export const CASE_RESULTS = [

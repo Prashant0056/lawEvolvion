@@ -1,7 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 
 import { INSIGHTS_LIST } from '../constants/content'
-import { ImageSlot } from './ImageSlot'
 
 export function Insights() {
   return (
@@ -21,7 +20,11 @@ export function Insights() {
         <div className="insights-layout">
           <article className="feat-article reveal">
             <div className="feat-article-img">
-              <ImageSlot placeholder="Drop a cover image" />
+              <img
+                src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80"
+                alt="Business meeting — merger review article"
+                style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover', display: 'block', borderRadius: 12 }}
+              />
             </div>
             <div className="art-meta">
               <span className="cat">Business Law</span>

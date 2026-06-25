@@ -975,6 +975,7 @@ export interface ConsultationRequest {
   message: string;
   status?: ('new' | 'contacted' | 'engaged' | 'closed') | null;
   submittedAt?: string | null;
+  _honeypot?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1685,6 +1686,7 @@ export interface ConsultationRequestsSelect<T extends boolean = true> {
   message?: T;
   status?: T;
   submittedAt?: T;
+  _honeypot?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2023,6 +2025,10 @@ export interface SiteSetting {
   id: number;
   heroEyebrow?: string | null;
   heroHeadline?: string | null;
+  /**
+   * Word in the headline to italicize
+   */
+  heroHeadlineEmphasis?: string | null;
   heroLead?: string | null;
   heroCtaPrimary?: string | null;
   heroCtaSecondary?: string | null;
@@ -2038,6 +2044,7 @@ export interface SiteSetting {
   statSatisfaction?: string | null;
   statSatisfactionLabel?: string | null;
   statRecovered?: string | null;
+  statRecoveredLabel?: string | null;
   phone?: string | null;
   email?: string | null;
   addressLine1?: string | null;
@@ -2148,6 +2155,7 @@ export interface FooterSelect<T extends boolean = true> {
 export interface SiteSettingsSelect<T extends boolean = true> {
   heroEyebrow?: T;
   heroHeadline?: T;
+  heroHeadlineEmphasis?: T;
   heroLead?: T;
   heroCtaPrimary?: T;
   heroCtaSecondary?: T;
@@ -2163,6 +2171,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   statSatisfaction?: T;
   statSatisfactionLabel?: T;
   statRecovered?: T;
+  statRecoveredLabel?: T;
   phone?: T;
   email?: T;
   addressLine1?: T;

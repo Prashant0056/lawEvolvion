@@ -17,6 +17,9 @@
 .la-input::placeholder, .la-textarea::placeholder { color: color-mix(in oklab, var(--muted) 85%, transparent); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .form-note { font-size: 12.5px; color: var(--muted); margin-top: 14px; }
+.field-error { font-size: 12.5px; color: var(--error, #c0392b); margin-top: 5px; display: flex; align-items: center; gap: 5px; }
+.la-input.is-invalid, .la-textarea.is-invalid, .la-select.is-invalid { border-color: var(--error, #c0392b); box-shadow: 0 0 0 3px color-mix(in oklab, var(--error, #c0392b) 18%, transparent); }
+[data-theme="dark"] .la-input.is-invalid, [data-theme="dark"] .la-textarea.is-invalid, [data-theme="dark"] .la-select.is-invalid { border-color: #e74c3c; }
 .form-ok { display: none; align-items: center; gap: 10px; margin-top: 16px; padding: 12px 16px; border-radius: 8px; background: color-mix(in oklab, var(--gold) 14%, var(--bg)); border: 1px solid var(--rule-soft); color: var(--ink); font-size: 14px; }
 .form-ok.show { display: flex; }
 
